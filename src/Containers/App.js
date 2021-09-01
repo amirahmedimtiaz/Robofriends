@@ -3,6 +3,7 @@ import CardList from '../Components/CardList';
 import SearchBox from '../Components/SearchBox';
 import './App.css'
 import Scroll from '../Components/Scroll';
+import ErrorBoundary from '../Components/ErrorBoundary';
 
 class App extends Component{
     constructor(){
@@ -25,7 +26,6 @@ class App extends Component{
         const filteredRobots=robots.filter(robot=>{
             return robot.name.toLowerCase().includes(searchfield.toLowerCase());
         })
-        console.log(filteredRobots);
         if(!robots.length){
             return <h1 className='tc'>Loading</h1>
         }
@@ -35,7 +35,9 @@ class App extends Component{
                     <h1 className='f1'>RoboFriends</h1>
                     <SearchBox searchChange={this.onSearchChange} />
                     <Scroll>
-                        <CardList robots={filteredRobots} />
+                        <ErrorBoundary>
+                             <CardList robots={filteredRobots} />
+                        </ErrorBoundary>
                     </Scroll> 
                 </div>
                 
